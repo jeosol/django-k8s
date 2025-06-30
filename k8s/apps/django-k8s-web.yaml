@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-k8s-web-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: django-k8s-web-deployment
+  template: 
+    metadata:
+      labels:
+        app: django-k8s-web-deployment
+    spec:
+      containers:
+        - name: django-k8s-web
+          image: registry.digitalocean.com/tdba/django-k8s-web:latest
+          envFrom:
+            - secretRef:
+                name: django-k8s-web-prod-env
+          env:
+            - name: PORT
+              value: "8001"
+          ports:
+            - containerPort: 8181
+      imagePullSecrets:
+           - name: tdba
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-k8s-web-service
+spec:
+  # this will be a digital ocean LB to distribute traffic across all the pods
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80 # for the outside domain: http:/xxx.xx.xx.xxx:80, default port,
+      targetPort: 8181 # port the deployment/pod is running on
+  selector:
+    app: django-k8s-web-deployment
