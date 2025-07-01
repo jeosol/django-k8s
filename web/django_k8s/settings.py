@@ -91,6 +91,8 @@ DB_IS_AVAIL = all([DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DB_PORT])
 
 POSTGRES_READY = str(os.environ.get("POSTGRES_READY")) == "1"
 
+DB_IGNORE_SSL = os.environ.get("DB_IGNORE_SSL") == "true"
+
 if DB_IS_AVAIL and POSTGRES_READY:
     # update the database settings
     DATABASES = {
@@ -103,6 +105,13 @@ if DB_IS_AVAIL and POSTGRES_READY:
             "PORT": DB_PORT,
         }
     }
+
+    # for local dev, we don't want sslmode
+    # sslmode is for connecting securely to the production db
+    if not DB_IGNORE_SSL:
+        DATABASES["default"]["OPTIONS"] = {
+            "sslmode" : "require"
+        }
 
 print(DATABASES)
 # Password validation
