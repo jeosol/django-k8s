@@ -90,7 +90,10 @@ DB_DATABASE = os.environ.get("POSTGRES_DB")
 DB_HOST = os.environ.get("POSTGRES_HOST")
 DB_PORT = os.environ.get("POSTGRES_PORT")
 
-DB_IS_AVAIL = all([DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DB_PORT])
+db_parameters = [ DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DB_PORT ]
+print("DB_PARAMETERS = {db_parameters}")
+
+DB_IS_AVAIL = all(db_parameters) #DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DB_PORT])
 
 # POSTGRES_READY = str(os.environ.get("POSTGRES_READY")) == "1"
 
