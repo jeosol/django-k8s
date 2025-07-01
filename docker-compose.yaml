@@ -1,4 +1,4 @@
-version: "3.9"
+# version: "3.9"
 services:
   # web:
   #   depends_on:
@@ -17,7 +17,7 @@ services:
   #   volumes:
   #      - staticfiles:/app/staticfiles/
   postgres_db:
-    image: postgres
+    image: postgres:17
     restart: always
     command: -p 5434
     env_file:
