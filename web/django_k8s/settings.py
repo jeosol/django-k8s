@@ -32,6 +32,15 @@ ALLOWED_HOSTS = []
 if ENV_ALLOWED_HOST:
     ALLOWED_HOSTS = [ ENV_ALLOWED_HOST ]
 
+# Setup up email if there is 500 server, it will send an email to the
+# to the admin    
+# Check the blog post of the author
+
+# check the other blog post: staging django for production
+# allows to switch between different settings module
+# e.g., with changed port
+# python manage.py runserver --settings <django_k8s.settings> 8888
+# change the settings module    
 # Application definition
 
 INSTALLED_APPS = [
